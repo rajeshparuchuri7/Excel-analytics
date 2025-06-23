@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BarChart2, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -15,8 +16,7 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    
+    e.preventDefault();    
     if (password !== confirmPassword) {
       return setError('Passwords do not match');
     }
@@ -25,6 +25,11 @@ const Signup = () => {
       setError('');
       setLoading(true);
       await signUp(name, email, password);
+      // let response = await axios.post('http://localhost:8080/api/auth/signup',{
+      //   name,
+      //   password,
+      //   email,
+      // })
       navigate('/dashboard');
     } catch (err) {
       setError('Failed to create an account');
@@ -33,6 +38,9 @@ const Signup = () => {
       setLoading(false);
     }
   };
+
+
+
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">

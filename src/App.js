@@ -48,10 +48,10 @@ function App() {
       </Route>
       
       {/* Redirect to dashboard if authenticated and accessing root */}
-      <Route 
+      {/* <Route 
         path="*" 
         element={currentUser ? <Navigate to="/dashboard" /> : <Navigate to="/" />} 
-      />
+      /> */}
     </Routes>
   );
 }

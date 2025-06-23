@@ -1,8 +1,17 @@
-const express = require('express');
-const router = express.Router();
-const { signup, signin } = require('../controllers/authController');
+const jwt = require('jsonwebtoken');
 
-router.post('/signup', signup);
-router.post('/signin', signin);
+const auth = (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ message: 'Unauthorized' });
 
-module.exports = router;
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.userId = decoded.id;
+    next();
+  } catch {
+    return res.status(403).json({ message: 'Invalid token' });
+  }
+};
+
+module.exports = auth;
+

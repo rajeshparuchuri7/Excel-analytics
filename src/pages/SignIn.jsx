@@ -19,11 +19,14 @@ const SignIn = () => {
     try {
       setError('');
       setLoading(true);
-      await signIn(email, password);
-      navigate('/dashboard');
+      // let response = await axios.post('http://localhost:8080/api/auth/login',{
+      //    email,
+      //   password,       
+      // })
+      navigate('/dashboard');      
     } catch (err) {
       setError('Failed to sign in. Please check your credentials.');
-      console.error(err);
+      console.error(err.response?.data?.message);
     } finally {
       setLoading(false);
     }
